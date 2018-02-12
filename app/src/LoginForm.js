@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { login } from './redux/reducer';
-import { Link } from 'react-router-dom'
 import './LoginForm.css';
 
 class LoginForm extends Component {
@@ -32,9 +31,7 @@ class LoginForm extends Component {
                     </div>
                 </div>
 
-                <Link to="/">
-                    <input type="submit" value="Login" />
-                </Link>
+                <input type="submit" value="Login" />
 
                 <div className="message">
                     { isLoginPending && <div>Please wait...</div> }

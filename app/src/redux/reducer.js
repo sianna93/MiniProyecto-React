@@ -1,6 +1,8 @@
+import {history} from '../helper/history.js';
 const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
 const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
+const SET_USER_LIST_ERROR = 'SET_USER_LIST_ERROR';
 
 function setLoginPending(isLoginPending) {
     return {
@@ -23,9 +25,10 @@ function setLoginError(loginError) {
     }
 }
 
-export function getLoginSuccess() {
+function setUserListError(userListError) {
     return {
-        type: SET_LOGIN_SUCCESS
+        type: SET_USER_LIST_ERROR,
+        userListError
     }
 }
 
@@ -49,6 +52,7 @@ export function login(user, password) {
             dispatch(setLoginPending(false));
             if (!error) {
                 dispatch(setLoginSuccess(true));
+                history.push('/');
             } else {
                 dispatch(setLoginError(error));
             }
@@ -61,13 +65,15 @@ export function logout() {
         dispatch(setLoginPending(false));
         dispatch(setLoginSuccess(false));
         dispatch(setLoginError(null));
+        history.push('/logout');
     }
 }
 
 export default function reducer(state = {
     isLoginSuccess: false,
     isLoginPending: false,
-    loginError: null
+    loginError: null,
+    userListError: null
 }, action) {
     switch (action.type) {
         case SET_LOGIN_PENDING:
@@ -83,6 +89,10 @@ export default function reducer(state = {
         case SET_LOGIN_ERROR:
             return Object.assign({}, state, {
                 loginError: action.loginError
+            });
+        case SET_USER_LIST_ERROR:
+            return Object.assign({}, state, {
+                userListError: action.userListError
             });
 
         default:

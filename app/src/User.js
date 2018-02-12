@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import {logout} from "./redux/reducer";
 import {connect} from "react-redux";
 
 class User extends Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             error: null,
             isLoaded: false,
             users: []
         };
+        this.exit = this.exit.bind(this);
     }
 
     componentDidMount() {
@@ -47,11 +48,11 @@ class User extends Component {
             return (
                 <div className="App">
                     <header>
-                        <Link to="/logout">
-                            <button type="button">
+
+                            <button type="button" onClick={this.exit}>
                                 LOGOUT
                             </button>
-                        </Link>
+
                     </header>
                     <p className="App-intro">
                         Users:
@@ -68,7 +69,26 @@ class User extends Component {
             );
         }
     }
+
+    exit(){
+        this.props.logout();
+    }
 }
 
+function mapStateToProps(state) {
+    console.log(state.isLoginPending);
+    return {
+        isLoginPending: state.isLoginPending,
+        isLoginSuccess: state.isLoginSuccess,
+        loginError: state.loginError
+    }
+}
 
-export default User;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logout: () => dispatch(logout())
+    };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(User);
