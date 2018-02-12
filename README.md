@@ -1,5 +1,5 @@
 # MiniProyecto-React
 
-```cd app```
-```npm install```
-```react-scripts start```
+* ```cd app```
+* ```npm install```
+* ```react-scripts start```
